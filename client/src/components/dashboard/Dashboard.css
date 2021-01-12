@@ -1,0 +1,44 @@
+.dashboard{
+    height: 70vh;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 1px #999;
+    background-color: white;
+}
+
+.student-container{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.student-content{
+    margin-left: 10px;
+}
+
+.student-content h2{
+    font-size: 3rem;
+    margin: 0;
+}
+
+.student-image{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.student-image img{
+    width: 150px;
+    height: 150px;
+    border: 1px solid gray;
+    border-radius: 50%;
+}
+
+.student-info{
+    padding-left: 20px;
+}

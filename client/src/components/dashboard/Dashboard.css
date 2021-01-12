@@ -1,13 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
 .dashboard{
+    position: absolute;
     height: 70vh;
-    width: 50vw;
+    width: 900px;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    overflow-x: hidden;
     border: 1px solid #b8b8b8;
     border-radius: 5px;
     box-shadow: 0 2px 4px 1px #999;
     background-color: white;
+}
+
+.dashboard input{
+    height: 30px;
+    width: 870px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.2rem;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid grey;
+    position: sticky;
+    top: 0;
+}
+
+.dashboard content:focus{
+    border: none;
 }
 
 .student-container{
@@ -23,6 +43,7 @@
 .student-content h2{
     font-size: 3rem;
     margin: 0;
+    font-family: 'Raleway', sans-serif;
 }
 
 .student-image{

@@ -1,27 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Dashboard.css';
 
 const Dashboard = ({apiData}) => {
 
+    const [filter, setFilter] = useState('');
+
     const findAverage = (e) => {
-        console.log(e);
         const total = e.reduce((acc, curr) => {
             return parseInt(acc) + parseInt(curr)
         })
         return total / e.length;
     }
 
+    const handleName = (e) => {
+        e.preventDefault();
+        setFilter(e.target.value.toLowerCase())
+        console.log(filter);
+    }
 
     if(apiData === null){
         return (
-        <div>
+        <div className="dashboard">
             <h2>Loading Students...</h2>
         </div>
         )
     } else{
         return (
             <div className="dashboard">
-                {apiData.map((item, index) => {
+                <input placeholder='Search Name' onChange={handleName}></input>
+                { apiData.filter(item => {
+                    if(filter === '')
+                        return item
+                    else if(item.firstName.toLowerCase().includes(filter) || item.lastName.toLowerCase().includes(filter))
+                        return item
+                }).map((item, index) => {
                     return (
                         <div key={index} className='student-container'>
                             <div className='student-image'>

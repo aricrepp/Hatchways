@@ -12,7 +12,6 @@ function App() {
     axios.get('https://api.hatchways.io/assessment/students')
     .then((res) => {
       setApiData(res.data.students)
-      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);

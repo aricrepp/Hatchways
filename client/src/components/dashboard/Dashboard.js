@@ -4,9 +4,9 @@ import './Dashboard.css';
 const Dashboard = ({apiData}) => {
 
     const [filter, setFilter] = useState('');
-    const [hidden, setHidden] = useState({dispay: 'none'})
-    const [expandSym, setExpandSym] = useState('+')
-    const [on, setOn] = useState(false)
+    const [tagSearch, setTagSearch] = useState('');
+    const [form, setForm] = useState('')
+
 
     const findAverage = (e) => {
         const total = e.reduce((acc, curr) => {
@@ -18,7 +18,28 @@ const Dashboard = ({apiData}) => {
     const handleName = (e) => {
         e.preventDefault();
         setFilter(e.target.value.toLowerCase())
-        console.log(filter);
+    }
+
+    const handleTagSearch = (e) => {
+        e.preventDefault();
+        setTagSearch(e.target.value.toLowerCase())
+    }
+
+    const handleTagAdd = (e) => {
+        setForm({...form, [e.target.name]: e.target.value})
+        
+    }
+
+
+    const handleTagSubmit = (e, item) => {
+        e.preventDefault();
+        const content = document.getElementById(item.id)
+
+        if(item.id === content.id ){
+            item.tags.push(form)
+            setForm('');
+        } 
+        
     }
 
     const handleExpand = (e, item) => {
@@ -37,6 +58,7 @@ const Dashboard = ({apiData}) => {
         }
         
     }
+    
 
     if(apiData === null){
         return (
@@ -45,15 +67,34 @@ const Dashboard = ({apiData}) => {
         </div>
         )
     } else{
+
+        const getFilter = () => {
+                const filtered = apiData.filter(item => {
+                    const findTag = item.tags.map(tag => {
+                        if(item.tags.includes(tagSearch)){
+                            return item
+                        }
+                        return null
+                    })
+                if(filter === '' ){
+                    return item
+                }else if((item.firstName.toLowerCase().includes(filter) || item.lastName.toLowerCase().includes(filter)) && item === findTag){
+                    return item
+                }else if((item.firstName.toLowerCase().includes(filter) || item.lastName.toLowerCase().includes(filter))){
+                    return item
+                }
+                return null
+            })
+            return filtered
+        }
+
         return (
             <div className="dashboard">
-                <input placeholder='Search Name' onChange={handleName}></input>
-                { apiData.filter(item => {
-                    if(filter === '')
-                        return item
-                    else if(item.firstName.toLowerCase().includes(filter) || item.lastName.toLowerCase().includes(filter))
-                        return item
-                }).map((item, index) => {
+                <div className='student-inputs'>
+                    <input placeholder='Search Name' onChange={handleName}></input>
+                    <input placeholder='Search Tag' onChange={handleTagSearch}></input>
+                </div>
+                { getFilter().map((item, index) => {
                     return (<>
                         <div key={index} className='student-container'>
                             <div className='student-image'>
@@ -66,14 +107,22 @@ const Dashboard = ({apiData}) => {
                                     <p>Company: {item.company}</p>
                                     <p>Skill: {item.skill}</p>
                                     <p>Average: {findAverage(item.grades)}%</p>
+                                    <div className='tests-hidden' id={item.id}>
+                                        {item.grades.map((test, index) => {
+                                            return (
+                                                <p key={index}>Test {index}: {test}%</p>
+                                            )
+                                        })}
+                                    </div>
+                                    <div className="student-tag">
+                                        {item.tags.length > 0 ? item.tags.map((item, index) => {
+                                        return <div className='student-tag-pill' key={index}>{item.tag}</div>
+                                    }) : <div></div>}
+                                    </div>
                                     
-                                        <div className='tests-hidden' id={item.id} style={hidden} key={index}>
-                                            {item.grades.map((test, index) => {
-                                                return (
-                                                    <p key={index}>Test {index}: {test}%</p>
-                                                )
-                                            })}
-                                        </div>
+                                    <form key={index} onSubmit={e => handleTagSubmit(e,item)}>
+                                        <input className='student-tag-search' placeholder='Add Tag' name='tag' onChange={handleTagAdd} ></input>
+                                    </form>
                                 </div>
                             </div>
                             <div className='expand' onClick={e => handleExpand(e,item)}>
@@ -81,7 +130,6 @@ const Dashboard = ({apiData}) => {
                             </div>
                             
                         </div>
-                        
                     </>)
                 })}
             </div>

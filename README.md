@@ -3,7 +3,7 @@ Hatchways Front End Assessment
 
 ## About
 
-This is the Front End Coding Challenge from Hatchways. I managed to build this in one afternoon while juggling full time work, a baby, and night software development school. The content was built to the design specifications of the Hatchway assessment. Some choices were decisions for ease of implementation and speed.
+This is the Front End Coding Challenge from Hatchways. Over the course of three, five hour days I was able to build the front end assessment all while managing full-time work, my 1 year old baby boy, and night software development school. The content was built to the design specifications of the Hatchway assessment. Some choices were decisions for ease of implementation and speed.
 
 ## Getting Started
 
